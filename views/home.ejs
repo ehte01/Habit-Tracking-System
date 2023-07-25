@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="/css/home.css" type="text/css">
+<div class="center">
+    <main class="todo-Container">
+        <h1 class="heading">✍️TrackMyHabits</h1>
+        <form action="/addHabit" method="post" class="head">
+            <div class="description">
+                <input type="text" name="name" id="description" placeholder="Write Your Habit Here" required>
+            </div>
+            <div class="add-btn">
+                <button type="submit" id="add-task" class="btn"> <span class="box"><i class="fa fa-plus"></i> Add Habit</span></button>
+            </div>
+        </form>
+    </main>
+
+    <% if(habits.length > 0){ %>
+        <div class="habit-list">
+            <% for(i of habits) { %>
+            <% let l = (i.records.length-1) %>
+            <div class="habit-list-item">
+                <div class="habit">✍️ <%= i.name %></div>
+                <form action="/update/<%= i._id %>/<%= i.records[l]._id %>" method="post">
+                    <% if(i.records[l].status === 'none') { %>
+                        <i class="fa fa-minus-circle"></i>
+                        <select name="status" class="status" value="None" style="background-color: rgb(255, 207, 16);">
+                            <option value="none" style="background-color: yellow;">None</option>
+                            <option value="done" style="background-color: green;">Done</option>
+                            <option value="not done" style="background-color: red;">Not Done</option>
+                        </select>
+                    <% } %>
+                    <% if(i.records[l].status === 'done') { %>
+                        <i class="fa fa-check-circle"></i>
+                        <select name="status" class="status" value="Done" style="background-color: green; color: aliceblue;">
+                            <option value="done" style="background-color: green;">Done</option>
+                            <option value="none" style="background-color: yellow;">None</option>
+                            <option value="not done" style="background-color: red;">Not Done</option>
+                            </select>
+                    <% } %>
+                    <% if(i.records[l].status === 'not done') { %>
+                        <i class="fa fa-stop-circle"></i>
+                        <select name="status" class="status" value="Not Done" style="background-color: red; color: aliceblue;">
+                            <option value="not done" style="background-color: red;">Not Done</option>
+                            <option value="none" style="background-color: yellow;">None</option>
+                            <option value="done" style="background-color: green;">Done</option>
+                        </select>
+                    <% } %>
+                    <button type="submit" class="status-btn"><i class="fa fa-thumbs-up"></i></button>
+                </form>
+                <a href="/details/<%= i.id %>"><button class="shadow__btn">
+                    view
+                </button></a>
+                <a href="/delete/<%= i.id %>" class="remove">
+                    <i class="fa fa-times-circle"></i>
+                </a>
+            </div>
+            <% } %>
+        </div>
+    <% } %>
+
+</div>
+
+
+
+
